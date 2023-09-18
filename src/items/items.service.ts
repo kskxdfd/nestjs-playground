@@ -1,53 +1,32 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Item } from './item.model';
-import { ItemStatus } from './item-status.enum';
 import { CreateItemDto } from './dto/create-item.dto';
-import { v4 as uuid } from 'uuid';
-import { PrismaService } from '../prisma/prisma.service';
+import { ItemRepository } from './item.repository';
 
 @Injectable()
 export class ItemsService {
-  constructor(private readonly prisma: PrismaService) {}
-
-  findAll(): Promise<Item[]> {
-    return this.prisma.item.findMany();
+  constructor(private readonly itemRepository: ItemRepository) {}
+  async findAll(): Promise<Item[]> {
+    return this.itemRepository.findAll();
   }
 
   async findById(id: string): Promise<Item> {
-    const found = await this.prisma.item.findFirst({
-      where: { id: id },
-    });
+    const found = await this.itemRepository.findOne(id);
 
     if (!found) throw new NotFoundException();
 
     return found;
   }
 
-  create(createItemDto: CreateItemDto): Promise<Item> {
-    const { name, price, description } = createItemDto;
-    return this.prisma.item.create({
-      data: {
-        id: uuid(),
-        name: name,
-        price: price,
-        description: description,
-        status: ItemStatus.ON_SALE,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    });
+  async create(createItemDto: CreateItemDto): Promise<Item> {
+    return await this.itemRepository.createItem(createItemDto);
   }
 
-  updateStatus(id: string): Promise<Item> {
-    return this.prisma.item.update({
-      where: { id: id },
-      data: { status: ItemStatus.SOLD_OUT },
-    });
+  async updateStatus(id: string): Promise<Item> {
+    return await this.itemRepository.update(id);
   }
 
-  delete(id: string): Promise<Item> {
-    return this.prisma.item.delete({
-      where: { id: id },
-    });
+  async delete(id: string): Promise<Item> {
+    return await this.itemRepository.delete(id);
   }
 }

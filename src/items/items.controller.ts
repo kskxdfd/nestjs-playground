@@ -18,12 +18,12 @@ export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Get()
-  findAll(): Promise<Item[]> {
-    return this.itemsService.findAll();
+  async findAll(): Promise<Item[]> {
+    return await this.itemsService.findAll();
   }
 
   @Get(':id')
-  findById(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
+  async findById(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
     return this.itemsService.findById(id);
   }
 
@@ -35,12 +35,12 @@ export class ItemsController {
   }
 
   @Patch(':id')
-  updateStatus(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
+  async updateStatus(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
     return this.itemsService.updateStatus(id);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
+  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
     return this.itemsService.delete(id);
   }
 }
