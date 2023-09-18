@@ -13,8 +13,8 @@ export class ItemsService {
     return this.prisma.item.findMany();
   }
 
-  findById(id: string): Promise<Item> {
-    const found = this.prisma.item.findFirst({
+  async findById(id: string): Promise<Item> {
+    const found = await this.prisma.item.findFirst({
       where: { id: id },
     });
 
