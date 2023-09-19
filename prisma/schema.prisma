@@ -19,3 +19,10 @@ model Item {
   createdAt String
   updatedAt String
 }
+
+model User {
+  id String @id @default(uuid())
+  username String @unique
+  password String
+  status String
+}

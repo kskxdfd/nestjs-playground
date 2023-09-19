@@ -6,6 +6,7 @@ import { ItemRepository } from './item.repository';
 @Injectable()
 export class ItemsService {
   constructor(private readonly itemRepository: ItemRepository) {}
+
   async findAll(): Promise<Item[]> {
     return this.itemRepository.findAll();
   }
