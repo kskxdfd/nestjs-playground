@@ -3,7 +3,7 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { v4 as uuid } from 'uuid';
 import { ItemStatus } from './item-status.enum';
-import { Item } from './item.model';
+import { Item } from '@prisma/client';
 
 @Injectable()
 export class ItemRepository {

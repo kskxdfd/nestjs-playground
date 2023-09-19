@@ -10,7 +10,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
-import { Item } from './item.model';
+import { Item } from '@prisma/client';
 import { CreateItemDto } from './dto/create-item.dto';
 
 @Controller('items')
