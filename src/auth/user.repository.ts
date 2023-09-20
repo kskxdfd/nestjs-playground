@@ -21,4 +21,13 @@ export class UserRepository {
       },
     });
   }
+
+  async findOne(conditions: { id?: string; username?: string }): Promise<User> {
+    return this.prisma.user.findFirst({
+      where: {
+        id: conditions?.id,
+        username: conditions?.username,
+      },
+    });
+  }
 }
