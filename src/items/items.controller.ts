@@ -15,6 +15,9 @@ import { Item, User } from '@prisma/client';
 import { CreateItemDto } from './dto/create-item.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GetUser } from '../auth/decorator/get-user.decorator';
+import { Role } from '../auth/decorator/role.decorator';
+import { UserStatus } from '../auth/user-status.enum';
+import { RolesGuard } from '../auth/guards/rorles.guard';
 
 @Controller('items')
 export class ItemsController {
@@ -31,7 +34,8 @@ export class ItemsController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @Role(UserStatus.PREMIUM)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   create(
     @Body(new ValidationPipe({ transform: true })) createItemDto: CreateItemDto,
     @GetUser() user: User,
