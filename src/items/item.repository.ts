@@ -20,7 +20,7 @@ export class ItemRepository {
   }
 
   async createItem(createItemDto: CreateItemDto) {
-    const { name, price, description } = createItemDto;
+    const { name, price, description, userId } = createItemDto;
     return this.prisma.item.create({
       data: {
         id: uuid(),
@@ -28,6 +28,7 @@ export class ItemRepository {
         price: price,
         description: description,
         status: ItemStatus.ON_SALE,
+        userId: userId,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       },

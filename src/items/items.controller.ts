@@ -11,9 +11,10 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
-import { Item } from '@prisma/client';
+import { Item, User } from '@prisma/client';
 import { CreateItemDto } from './dto/create-item.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { GetUser } from '../auth/decorator/get-user.decorator';
 
 @Controller('items')
 export class ItemsController {
@@ -33,8 +34,12 @@ export class ItemsController {
   @UseGuards(JwtAuthGuard)
   create(
     @Body(new ValidationPipe({ transform: true })) createItemDto: CreateItemDto,
+    @GetUser() user: User,
   ): Promise<Item> {
-    return this.itemsService.create(createItemDto);
+    return this.itemsService.create({
+      ...createItemDto,
+      userId: user.id,
+    });
   }
 
   @Patch(':id')
