@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Item } from '@prisma/client';
+import { Item, User } from '@prisma/client';
 import { CreateItemDto } from './dto/create-item.dto';
 import { ItemRepository } from './item.repository';
 
@@ -19,15 +19,15 @@ export class ItemsService {
     return found;
   }
 
-  async create(createItemDto: CreateItemDto): Promise<Item> {
-    return await this.itemRepository.createItem(createItemDto);
+  async create(createItemDto: CreateItemDto, user: User): Promise<Item> {
+    return await this.itemRepository.createItem(createItemDto, user);
   }
 
-  async updateStatus(id: string): Promise<Item> {
-    return await this.itemRepository.update(id);
+  async updateStatus(id: string, user: User): Promise<Item> {
+    return await this.itemRepository.update(id, user);
   }
 
-  async delete(id: string): Promise<Item> {
-    return await this.itemRepository.delete(id);
+  async delete(id: string, user: User): Promise<Item> {
+    return await this.itemRepository.delete(id, user);
   }
 }

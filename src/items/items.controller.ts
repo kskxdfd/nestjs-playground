@@ -36,21 +36,24 @@ export class ItemsController {
     @Body(new ValidationPipe({ transform: true })) createItemDto: CreateItemDto,
     @GetUser() user: User,
   ): Promise<Item> {
-    return this.itemsService.create({
-      ...createItemDto,
-      userId: user.id,
-    });
+    return this.itemsService.create(createItemDto, user);
   }
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
-  async updateStatus(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
-    return this.itemsService.updateStatus(id);
+  async updateStatus(
+    @Param('id', ParseUUIDPipe) id: string,
+    @GetUser() user: User,
+  ): Promise<Item> {
+    return this.itemsService.updateStatus(id, user);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
-    return this.itemsService.delete(id);
+  async delete(
+    @Param('id', ParseUUIDPipe) id: string,
+    @GetUser() user: User,
+  ): Promise<Item> {
+    return this.itemsService.delete(id, user);
   }
 }

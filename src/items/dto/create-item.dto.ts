@@ -15,11 +15,4 @@ export class CreateItemDto {
   @IsString()
   @IsNotEmpty()
   description: string;
-
-  /**
-   * user.id
-   * JwtStrategyを介して取得したユーザー情報が格納される
-   * バリデーションを介さない場合は値が入らない
-   */
-  userId?: string;
 }
