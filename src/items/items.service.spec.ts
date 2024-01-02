@@ -3,7 +3,7 @@ import { ItemsService } from './items.service';
 import { ItemRepository } from './item.repository';
 import { UserStatus } from '../auth/user-status.enum';
 import { ItemStatus } from './item-status.enum';
-import { NotFoundException } from "@nestjs/common";
+import { NotFoundException } from '@nestjs/common';
 
 const mockItemRepository = () => ({
   findAll: jest.fn(),
